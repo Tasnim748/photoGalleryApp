@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from '../firebase';
@@ -13,7 +13,7 @@ export const AuthContextProvider = props => {
     const createUser = (email, password) => {
         createUserWithEmailAndPassword(auth, email, password).then(userCred => {
             console.log(userCred.user.email);
-            navigate('/account')
+            navigate('/gallery')
         }).catch(e => {
             console.log(e.message);
         });
@@ -25,7 +25,7 @@ export const AuthContextProvider = props => {
 
     const signin = (email, password) => {
         signInWithEmailAndPassword(auth, email, password).then(userCred => {
-            navigate('/account');
+            navigate('/gallery');
             console.log(userCred.user.email);
         }).catch(err => {
             console.log(err.message);

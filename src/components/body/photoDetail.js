@@ -18,7 +18,6 @@ const PhotoDetail = (props) => {
 
     const author = UserAuth().user.email;
 
-    console.log(author);
     return (
         <Modal
             show={props.selection}
@@ -36,7 +35,6 @@ const PhotoDetail = (props) => {
                 {comments}
                 <hr />
                 <CommentForm
-                    commentNum={props.comments.length}
                     photoId={props.photoId}
                     author={author}
                 />

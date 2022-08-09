@@ -1,12 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { addComment } from '../../redux/actionCreators';
+import axios from 'axios';
+import { URL } from '../../url';
+
+const mapDispatchToProps = dispaz => {
+    return {
+        addComment: (comment) => dispaz(addComment(comment))
+    }
+}
 
 class CommentForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             comment: "",
-            time: "",
         }
     }
 
@@ -26,16 +34,26 @@ class CommentForm extends React.Component {
         e.preventDefault();
         let payLoad = this.state;
         payLoad.photoId = this.props.photoId;
-        payLoad.id = this.props.commentNum;
-        payLoad.author = this.props.author; 
-        this.props.dispatch({
-            type: 'ADD_COMMENT',
-            payLoad: payLoad
-        })
-        this.setState({
-            author: "",
-            comment: ""
-        })
+        payLoad.author = this.props.author;
+        // getting current time
+        const currentdate = new Date();
+        const datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " at "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+        payLoad.datetime = datetime;
+
+        // send to server
+        axios.post(`${URL}/comments`, payLoad)
+            .then(response => {
+                this.props.addComment(payLoad);
+                this.setState({
+                    comment: ""
+                })
+            })
+            .catch(err => window.alert('something wrong'));
     }
 
     render () {
@@ -59,4 +77,4 @@ class CommentForm extends React.Component {
     }
 }
 
-export default connect()(CommentForm);
+export default connect(null, mapDispatchToProps)(CommentForm);

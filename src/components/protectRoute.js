@@ -4,7 +4,6 @@ import { UserAuth } from "../context/authContext";
 
 const ProtectRoute = props => {
     const {user} = UserAuth();
-    console.log(user);
 
     if (!user) {
         return <Navigate to={props.rote} />
