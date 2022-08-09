@@ -61,7 +61,7 @@ function UploadImage(props) {
     }
 
     return (
-        <form onSubmit={imgSubmitHandler} >
+        <form onSubmit={imgSubmitHandler} style={{margin: '40px'}} >
             <div className="mb-3">
                 <label htmlFor="formFile" className="form-label">Upload you own image</label>
                 <input className="form-control" type="file" required id="formFile" accept="image/png, image/jpeg" onChange={fileChangeHandler} />
